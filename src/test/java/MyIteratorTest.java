@@ -8,56 +8,53 @@ import static org.junit.Assert.assertEquals;
 
 public class MyIteratorTest{
     private static final int SIZE = 20;
-    MyIterator<String> array1 = new MyIterator<String>(SIZE);
-    MyIterator<Integer> array2 = new MyIterator<Integer>(0);
+    private MyIterator<String> array = new MyIterator<String>(SIZE);
 
     @Before
     public void before() throws Exception {
         for (int i = 0; i < SIZE; i++) {
-            array1.put(i, "String " + i);
+            array.put(i, "String " + i);
         }
     }
 
     @After
     public void after() throws Exception {
-        array1 = null;
+        array = null;
     }
 
     @Test
     public void testPut() {
-        array1.put(0, "Test");
-        assertEquals(array1.get(0), "Test");
-        array1.put(0, "String 0");
-        assertEquals(array1.get(0), "String 0");
+        array.put(0, "Test");
+        assertEquals(array.get(0), "Test");
     }
 
     @Test
     public void testGet() {
-        assertEquals(array1.get(0), "String 0");
-        assertEquals(array1.get(19), "String 19");
+        assertEquals(array.get(0), "String 0");
+        assertEquals(array.get(19), "String 19");
     }
 
     @Test
     public void testIterator() {
         int i = 0;
-        for (String str : array1) {
+        for (String str : array) {
             assertEquals(str, "String " + (i++));
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void put() throws Exception {
-        array2.put(1, 1);
+    public void testPutThrowException() throws Exception {
+        array.put(20, "String 20");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void get() throws Exception {
-        array2.get(1);
+    public void testGetThrowException() throws Exception {
+        array.get(20);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void iterator() throws Exception {
-        Iterator<Integer> iterator = array2.iterator();
+    public void testIteratorThrowException() throws Exception {
+        Iterator<String> iterator = array.iterator();
         iterator.remove();
     }
 }
